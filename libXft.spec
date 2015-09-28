@@ -4,7 +4,7 @@
 #
 Name     : libXft
 Version  : 2.3.2
-Release  : 3
+Release  : 4
 URL      : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.2.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.2.tar.gz
 Summary  : X FreeType library
