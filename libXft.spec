@@ -4,12 +4,12 @@
 #
 Name     : libXft
 Version  : 2.3.2
-Release  : 6
+Release  : 7
 URL      : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.2.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.2.tar.gz
 Summary  : X FreeType library
 Group    : Development/Tools
-License  : MIT
+License  : HPND
 Requires: libXft-lib
 Requires: libXft-doc
 BuildRequires : pkgconfig(fontconfig)
@@ -28,6 +28,7 @@ uses fontconfig to locate fonts so it has no configuration files.
 Summary: dev components for the libXft package.
 Group: Development
 Requires: libXft-lib
+Provides: libXft-devel
 
 %description dev
 dev components for the libXft package.
@@ -53,10 +54,15 @@ lib components for the libXft package.
 %setup -q -n libXft-2.3.2
 
 %build
+export LANG=C
 %configure --disable-static
-make V=1 %{?_smp_mflags}
+make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
@@ -70,8 +76,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/include/X11/Xft/Xft.h
 /usr/include/X11/Xft/XftCompat.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libXft.so
+/usr/lib64/pkgconfig/xft.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -79,4 +85,5 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libXft.so.2
+/usr/lib64/libXft.so.2.3.2
