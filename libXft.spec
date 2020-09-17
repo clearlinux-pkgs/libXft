@@ -6,26 +6,17 @@
 #
 Name     : libXft
 Version  : 2.3.3
-Release  : 15
+Release  : 16
 URL      : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz
 Source0  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz
-Source1 : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz.sig
+Source1  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz.sig
 Summary  : X FreeType library
 Group    : Development/Tools
 License  : HPND
 Requires: libXft-lib = %{version}-%{release}
 Requires: libXft-license = %{version}-%{release}
-BuildRequires : gcc-dev32
-BuildRequires : gcc-libgcc32
-BuildRequires : gcc-libstdc++32
-BuildRequires : glibc-dev32
-BuildRequires : glibc-libc32
 BuildRequires : pkg-config
-BuildRequires : pkgconfig(32fontconfig)
-BuildRequires : pkgconfig(32freetype2)
-BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(32xorg-macros)
-BuildRequires : pkgconfig(32xrender)
 BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(x11)
@@ -49,16 +40,6 @@ Requires: libXft = %{version}-%{release}
 dev components for the libXft package.
 
 
-%package dev32
-Summary: dev32 components for the libXft package.
-Group: Default
-Requires: libXft-lib32 = %{version}-%{release}
-Requires: libXft-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the libXft package.
-
-
 %package lib
 Summary: lib components for the libXft package.
 Group: Libraries
@@ -66,15 +47,6 @@ Requires: libXft-license = %{version}-%{release}
 
 %description lib
 lib components for the libXft package.
-
-
-%package lib32
-Summary: lib32 components for the libXft package.
-Group: Default
-Requires: libXft-license = %{version}-%{release}
-
-%description lib32
-lib32 components for the libXft package.
 
 
 %package license
@@ -87,59 +59,37 @@ license components for the libXft package.
 
 %prep
 %setup -q -n libXft-2.3.3
-pushd ..
-cp -a libXft-2.3.3 build32
-popd
+cd %{_builddir}/libXft-2.3.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568867571
+export SOURCE_DATE_EPOCH=1600306636
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
-pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%configure --disable-static    --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}
-popd
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
-cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1568867571
+export SOURCE_DATE_EPOCH=1600306636
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libXft
-cp COPYING %{buildroot}/usr/share/package-licenses/libXft/COPYING
-pushd ../build32/
-%make_install32
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do ln -s $i 32$i ; done
-popd
-fi
-popd
+cp %{_builddir}/libXft-2.3.3/COPYING %{buildroot}/usr/share/package-licenses/libXft/cb03b5ef1e3d983356601be29e306eebdc6a9257
 %make_install
 
 %files
@@ -153,22 +103,11 @@ popd
 /usr/lib64/pkgconfig/xft.pc
 /usr/share/man/man3/Xft.3
 
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libXft.so
-/usr/lib32/pkgconfig/32xft.pc
-/usr/lib32/pkgconfig/xft.pc
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libXft.so.2
 /usr/lib64/libXft.so.2.3.3
 
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/libXft.so.2
-/usr/lib32/libXft.so.2.3.3
-
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libXft/COPYING
+/usr/share/package-licenses/libXft/cb03b5ef1e3d983356601be29e306eebdc6a9257
