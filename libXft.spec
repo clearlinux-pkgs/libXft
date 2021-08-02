@@ -5,18 +5,16 @@
 # Source0 file verified with key 0xCFDF148828C642A7 (alanc@freedesktop.org)
 #
 Name     : libXft
-Version  : 2.3.3
-Release  : 16
-URL      : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz
-Source0  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz
-Source1  : http://xorg.freedesktop.org/releases/individual/lib/libXft-2.3.3.tar.gz.sig
+Version  : 2.3.4
+Release  : 17
+URL      : https://www.x.org/releases/individual/lib/libXft-2.3.4.tar.gz
+Source0  : https://www.x.org/releases/individual/lib/libXft-2.3.4.tar.gz
+Source1  : https://www.x.org/releases/individual/lib/libXft-2.3.4.tar.gz.sig
 Summary  : X FreeType library
 Group    : Development/Tools
 License  : HPND
 Requires: libXft-lib = %{version}-%{release}
 Requires: libXft-license = %{version}-%{release}
-BuildRequires : pkg-config
-BuildRequires : pkgconfig(32xorg-macros)
 BuildRequires : pkgconfig(fontconfig)
 BuildRequires : pkgconfig(freetype2)
 BuildRequires : pkgconfig(x11)
@@ -58,23 +56,23 @@ license components for the libXft package.
 
 
 %prep
-%setup -q -n libXft-2.3.3
-cd %{_builddir}/libXft-2.3.3
+%setup -q -n libXft-2.3.4
+cd %{_builddir}/libXft-2.3.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600306636
+export SOURCE_DATE_EPOCH=1627928741
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -86,10 +84,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1600306636
+export SOURCE_DATE_EPOCH=1627928741
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libXft
-cp %{_builddir}/libXft-2.3.3/COPYING %{buildroot}/usr/share/package-licenses/libXft/cb03b5ef1e3d983356601be29e306eebdc6a9257
+cp %{_builddir}/libXft-2.3.4/COPYING %{buildroot}/usr/share/package-licenses/libXft/cb03b5ef1e3d983356601be29e306eebdc6a9257
 %make_install
 
 %files
@@ -106,7 +104,7 @@ cp %{_builddir}/libXft-2.3.3/COPYING %{buildroot}/usr/share/package-licenses/lib
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libXft.so.2
-/usr/lib64/libXft.so.2.3.3
+/usr/lib64/libXft.so.2.3.4
 
 %files license
 %defattr(0644,root,root,0755)

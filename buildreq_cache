@@ -1,4 +1,2 @@
-2.3.3
-pkg-config
-pkgconfig(32xorg-macros)
+2.3.4
 pkgconfig(xorg-macros)
