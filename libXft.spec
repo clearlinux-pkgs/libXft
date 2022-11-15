@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xCC2AF4472167BE03 (dickey@his.com)
 #
 Name     : libXft
-Version  : 2.3.6
-Release  : 19
-URL      : https://www.x.org/releases/individual/lib/libXft-2.3.6.tar.gz
-Source0  : https://www.x.org/releases/individual/lib/libXft-2.3.6.tar.gz
-Source1  : https://www.x.org/releases/individual/lib/libXft-2.3.6.tar.gz.sig
+Version  : 2.3.7
+Release  : 20
+URL      : https://www.x.org/releases/individual/lib/libXft-2.3.7.tar.gz
+Source0  : https://www.x.org/releases/individual/lib/libXft-2.3.7.tar.gz
+Source1  : https://www.x.org/releases/individual/lib/libXft-2.3.7.tar.gz.sig
 Summary  : X FreeType library
 Group    : Development/Tools
 License  : HPND
@@ -56,15 +56,15 @@ license components for the libXft package.
 
 
 %prep
-%setup -q -n libXft-2.3.6
-cd %{_builddir}/libXft-2.3.6
+%setup -q -n libXft-2.3.7
+cd %{_builddir}/libXft-2.3.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1662835486
+export SOURCE_DATE_EPOCH=1668550232
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -84,7 +84,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1662835486
+export SOURCE_DATE_EPOCH=1668550232
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libXft
 cp %{_builddir}/libXft-%{version}/COPYING %{buildroot}/usr/share/package-licenses/libXft/cb03b5ef1e3d983356601be29e306eebdc6a9257
@@ -181,7 +181,7 @@ cp %{_builddir}/libXft-%{version}/COPYING %{buildroot}/usr/share/package-license
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libXft.so.2
-/usr/lib64/libXft.so.2.3.6
+/usr/lib64/libXft.so.2.3.7
 
 %files license
 %defattr(0644,root,root,0755)
